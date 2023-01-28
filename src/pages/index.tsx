@@ -1,7 +1,6 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
-import { useState } from "react";
+import { useState, memo } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,6 +14,13 @@ const Swatch: React.FC<SwatchProps> = ({ color }) => {
     <div className={`w-16 h-16 m-4`} style={{ backgroundColor: color }}></div>
   );
 };
+
+/**
+ * memo is a higher order function
+ * It creates component i.e, memoized component
+ * The memoized component only re-renders if it's props changes
+ */
+const MemoedSwatch = memo(Swatch);
 
 export default function Home() {
   const [appRenderIndex, setAppRenderIndex] = useState(0);
@@ -37,7 +43,7 @@ export default function Home() {
           </button>
         </div>
         <div>
-          <Swatch color={"red"} />
+          <MemoedSwatch color={"red"} />
         </div>
       </div>
     </>
