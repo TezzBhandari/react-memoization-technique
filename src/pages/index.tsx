@@ -1,19 +1,21 @@
 import Head from "next/head";
 import { Inter } from "@next/font/google";
-import { useState, memo, useMemo } from "react";
+import { useState, memo, useMemo, useCallback } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export type SwatchProps = {
   params: { color: string };
+  onClick: () => void;
 };
 
-const Swatch: React.FC<SwatchProps> = ({ params }) => {
+const Swatch: React.FC<SwatchProps> = ({ params, onClick }) => {
   console.log(`Swatch Rendered with ${params.color}`);
   return (
     <div
       className={`w-16 h-16 m-4`}
       style={{ backgroundColor: params.color }}
+      onClick={onClick}
     ></div>
   );
 };
@@ -51,6 +53,12 @@ export default function Home() {
     [color]
   );
 
+  /**
+   * useCallback return the same function everytime it is called unless there is a dependency
+   * just like useMemo but for functions
+   */
+  const onClick = useCallback(() => {}, []);
+
   return (
     <>
       <Head>
@@ -77,7 +85,7 @@ export default function Home() {
         </div>
         <div>
           {/* Everytime it re-renders, it creates new object with new reference. It may have excatly the same value but it always has new reference */}
-          <MemoedSwatch params={params} />
+          <MemoedSwatch params={params} onClick={onClick} />
           {/* <MemoedSwatch color={color == "red" ? "blue" : "red"} /> */}
         </div>
       </div>
