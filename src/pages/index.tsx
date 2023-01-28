@@ -24,6 +24,7 @@ const MemoedSwatch = memo(Swatch);
 
 export default function Home() {
   const [appRenderIndex, setAppRenderIndex] = useState(0);
+  const [color, setColor] = useState("red");
   console.log(`App Rendered ${appRenderIndex}`);
   return (
     <>
@@ -41,9 +42,17 @@ export default function Home() {
           >
             Re-Render App
           </button>
+
+          <button
+            className="border-2 px-3 py-2 rounded-md bg-red-200"
+            onClick={() => setColor(color === "red" ? "blue" : "red")}
+          >
+            Change Swatch Color
+          </button>
         </div>
         <div>
-          <MemoedSwatch color={"red"} />
+          <MemoedSwatch color={color} />
+          <MemoedSwatch color={color == "red" ? "blue" : "red"} />
         </div>
       </div>
     </>
